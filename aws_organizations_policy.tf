@@ -1,12 +1,11 @@
 resource "aws_organizations_policy" "this" {
-  description = "Opt out of all Amazon AI services at an organization level"
+  depends_on = [
+    terraform_data.this
+  ]
+
   name        = "OptOutOfAllAIServicesPolicy"
   type        = "AISERVICES_OPT_OUT_POLICY"
+  description = "Opt-out of Amazon AI/ML service/s at an organization level."
 
-  content = local.optOutPolicy
-}
-
-resource "aws_organizations_policy_attachment" "this" {
-  policy_id = aws_organizations_policy.this.id
-  target_id = var.organization.id
+  content     = jsonencode(var.optOutPolicy)
 }
