@@ -43,13 +43,43 @@ module "org_ai_opt_out" {
 - Execute `plan` to review the changes
 
 ```sh
+...
+      + id          = (known after apply)
+      + name        = "OptOutOfAllAIServicesPolicy"
+      + tags_all    = {
+          + "Contact" = "me@davidjeddy.com"
+          + "Owner"   = "David J Eddy"
+          + "Version" = "0.0.1"
+        }
+      + type        = "AISERVICES_OPT_OUT_POLICY"
+    }
 
+  # module.org_ai_opt_out.aws_organizations_policy_attachment.this will be created
+  + resource "aws_organizations_policy_attachment" "this" {
+      + id        = (known after apply)
+      + policy_id = (known after apply)
+      + target_id = "138402329854"
+    }
+
+  # module.org_ai_opt_out.terraform_data.this will be created
+  + resource "terraform_data" "this" {
+      + id = (known after apply)
+    }
+...
 ```
 
 - Execute `apply` to deploy the resources
 
 ```sh
+...
+module.org_ai_opt_out.terraform_data.this: Creation complete after 8s [id=2fe3ef28-f504-9f1c-0c0e-d07ef71660fa]
+module.org_ai_opt_out.aws_organizations_policy.this: Creating...
+module.org_ai_opt_out.aws_organizations_policy.this: Creation complete after 1s [id=p-9041ga8g37]
+module.org_ai_opt_out.aws_organizations_policy_attachment.this: Creating...
+module.org_ai_opt_out.aws_organizations_policy_attachment.this: Creation complete after 1s [id=138402329854:p-9041ga8g37]
 
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+...
 ```
 
 ## Sources
