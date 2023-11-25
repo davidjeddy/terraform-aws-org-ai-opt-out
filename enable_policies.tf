@@ -7,7 +7,7 @@ resource "terraform_data" "this" {
     ]
   }
 
-  # Ensure this resource is re-create on every run
+  # To be sure, re-run the AWS CLI command on every run
   # https://devdosvid.blog/2023/04/16/hello-terraform-data-goodbye-null-resource/
   triggers_replace = "${timestamp()}"
 }

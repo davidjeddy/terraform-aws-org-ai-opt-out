@@ -12,16 +12,14 @@ Unless explicitly opted out, data feed through AWS's AI services is used to trai
 
 ## Requirements
 
-Infra tools:
+- AWS permissions to modify an AWS Organization accounts
+- [AWS providers](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) ~ 5
+- [Bash](https://gnu.org/software/bash/) ~ 5 (or similar Linux shell)
+- [Terraform](https://www.terraform.io/) ~ 1.6 || [OpenToFu](https://opentofu.org/) ~ 1.6
 
-- AWS providers ~ 5
-- Terraform ~ 1.6 || OpenToFu ~ 1.6
-- Permissions to modify an AWS Organization in a root account
-
-And because the AWS provider is missing the ability to interact with Org policy enablement:
+... and because the AWS provider is missing the ability to interact with organizational policy enablement:
 
 - [AWS CLI](https://aws.amazon.com/cli/) ~ 2
-- [Bash](https://gnu.org/software/bash/) ~ 5 (or similar Linux shell)
 - [jq](https://jqlang.github.io/jq/) ~ 1.6
 
 ## Usage
@@ -30,51 +28,47 @@ And because the AWS provider is missing the ability to interact with Org policy 
 
 ```hcl
 module "org_ai_opt_out" {
-  source  = "davidjeddy/overmind/aws"
+  source  = "davidjeddy/org-ai-opt-out/aws"
   version = "0.1.0"
 }
 ```
 
 - Execute `plan` to review the changes
-
-```sh
-...
-      + id          = (known after apply)
-      + name        = "OptOutOfAllAIServicesPolicy"
-      + tags_all    = {
-          + "Contact" = "me@davidjeddy.com"
-          + "Owner"   = "David J Eddy"
-          + "Version" = "0.0.1"
-        }
-      + type        = "AISERVICES_OPT_OUT_POLICY"
-    }
-
-  # module.org_ai_opt_out.aws_organizations_policy_attachment.this will be created
-  + resource "aws_organizations_policy_attachment" "this" {
-      + id        = (known after apply)
-      + policy_id = (known after apply)
-      + target_id = "138402329854"
-    }
-
-  # module.org_ai_opt_out.terraform_data.this will be created
-  + resource "terraform_data" "this" {
-      + id = (known after apply)
-    }
-...
-```
-
 - Execute `apply` to deploy the resources
 
 ```sh
 ...
-module.org_ai_opt_out.terraform_data.this: Creation complete after 8s [id=2fe3ef28-f504-9f1c-0c0e-d07ef71660fa]
-module.org_ai_opt_out.aws_organizations_policy.this: Creating...
-module.org_ai_opt_out.aws_organizations_policy.this: Creation complete after 1s [id=p-9041ga8g37]
-module.org_ai_opt_out.aws_organizations_policy_attachment.this: Creating...
-module.org_ai_opt_out.aws_organizations_policy_attachment.this: Creation complete after 1s [id=138402329854:p-9041ga8g37]
+module.org_ai_opt_out.aws_organizations_policy_attachment.this["REDACTED"]: Creation complete after 1s [id=REDACTED:p-REDACTED]
+module.org_ai_opt_out.aws_organizations_policy_attachment.this["REDACTED"]: Creation complete after 1s [id=REDACTED:p-REDACTED]
+module.org_ai_opt_out.aws_organizations_policy_attachment.this["REDACTED"]: Creation complete after 4s [id=REDACTED:p-REDACTED]
+module.org_ai_opt_out.aws_organizations_policy_attachment.this["REDACTED"]: Creation complete after 5s [id=REDACTED:p-REDACTED]
+module.org_ai_opt_out.aws_organizations_policy_attachment.this["REDACTED"]: Creation complete after 6s [id=REDACTED:p-REDACTED]
+module.org_ai_opt_out.aws_organizations_policy_attachment.this["REDACTED"]: Creation complete after 7s [id=REDACTED:p-REDACTED]
+module.org_ai_opt_out.aws_organizations_policy_attachment.this["REDACTED"]: Creation complete after 7s [id=REDACTED:p-REDACTED]
+module.org_ai_opt_out.aws_organizations_policy_attachment.this["REDACTED"]: Creation complete after 8s [id=REDACTED:p-REDACTED]
 
-Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
-...
+Apply complete! Resources: 11 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+org_ai_opt_out = {
+  "account_ids" = tolist([
+    ...
+  ])
+  "policy" = {
+    "arn" = "arn:aws:organizations::REDACTED:policy/o-REDACTED/aiservices_opt_out_policy/p-REDACTED"
+    "content" = "{\"services\":{\"default\":{\"opt_out_policy\":{\"@@assign\":\"optOut\"}}}}"
+    "description" = "Opt-out of Amazon AI/ML service/s for all accounts accessible by the executing account."
+    "id" = "p-REDACTED"
+    "name" = "OptOutOfAllAIServicesPolicy"
+    "skip_destroy" = tobool(null)
+    "tags" = tomap(null) /* of string */
+    "tags_all" = tomap({
+      ...
+    })
+    "type" = "AISERVICES_OPT_OUT_POLICY"
+  }
+}
 ```
 
 ## Sources

@@ -8,6 +8,6 @@ variable "optOutPolicy" {
       }
     }
   }
-  description = "(optional) SCP optOut default"
+  description = "(optional) SCP optOut policy"
   type = any
 }
