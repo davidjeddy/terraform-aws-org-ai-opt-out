@@ -32,11 +32,6 @@ And because the AWS provider is missing the ability to interact with Org policy 
 module "org_ai_opt_out" {
   source  = "davidjeddy/overmind/aws"
   version = "0.1.0"
-
-  organization = {
-    name = var.name
-    id   = var.aws_acct_id
-  }
 }
 ```
 

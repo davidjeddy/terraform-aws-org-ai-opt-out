@@ -6,4 +6,8 @@ resource "terraform_data" "this" {
       "-c"
     ]
   }
+
+  # Ensure this resource is re-create on every run
+  # https://devdosvid.blog/2023/04/16/hello-terraform-data-goodbye-null-resource/
+  triggers_replace = "${timestamp()}"
 }

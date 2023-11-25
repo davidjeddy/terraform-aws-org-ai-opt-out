@@ -5,7 +5,7 @@ resource "aws_organizations_policy" "this" {
 
   name        = "OptOutOfAllAIServicesPolicy"
   type        = "AISERVICES_OPT_OUT_POLICY"
-  description = "Opt-out of Amazon AI/ML service/s at an organization level."
+  description = "Opt-out of Amazon AI/ML service/s for all accounts accessible by the executing account."
 
   content     = jsonencode(var.optOutPolicy)
 }

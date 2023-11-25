@@ -1,11 +1,3 @@
-variable "organization" {
-  type = object({
-    id = number,
-    name = string
-  })
-  description = "(required) Organization id and name"
-}
-
 variable "optOutPolicy" {
   default = {
     services = {
@@ -16,6 +8,6 @@ variable "optOutPolicy" {
       }
     }
   }
-  type = any
   description = "(optional) SCP optOut default"
+  type = any
 }
