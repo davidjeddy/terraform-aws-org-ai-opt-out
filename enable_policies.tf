@@ -1,6 +1,7 @@
 resource "terraform_data" "this" {
   provisioner "local-exec" {
-    command = "aws organizations enable-policy-type --root-id $(aws organizations list-roots | jq -r \".Roots[].Id\") --policy-type AISERVICES_OPT_OUT_POLICY"
+    # https://stackoverflow.com/questions/57693621/unable-to-run-shell-script-in-terraform
+    command = "${path.module}/apply_policy_to_organization.sh PROFILE ${data.aws_region.current.id}"
     interpreter = [
       "/bin/bash",
       "-c"
