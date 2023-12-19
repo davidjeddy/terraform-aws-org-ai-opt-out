@@ -17,7 +17,7 @@ Unless explicitly opted out, data feed through AWS's AI services is used to trai
 - [Bash](https://gnu.org/software/bash/) ~ 5 (or similar Linux shell)
 - [Terraform](https://www.terraform.io/) ~ 1.6 || [OpenToFu](https://opentofu.org/) ~ 1.6
 
-... and because the AWS provider is missing the ability to interact with organizational policy enablement:
+... and because the AWS provider is missing the ability to interact with organizational policy enablement as of version 5.1:
 
 - [AWS CLI](https://aws.amazon.com/cli/) ~ 2
 - [jq](https://jqlang.github.io/jq/) ~ 1.6
@@ -31,6 +31,13 @@ module "org_ai_opt_out" {
   source  = "davidjeddy/org-ai-opt-out/aws"
   version = "0.1.0"
 }
+```
+
+Export AWS_REGION and AWS_PROFILE as ENV VARs.
+
+```sh
+export AWS_REGION="us-east-1"
+export AWS_PROFILE="default"
 ```
 
 - Execute `plan` to review the changes
@@ -58,7 +65,7 @@ org_ai_opt_out = {
   "policy" = {
     "arn" = "arn:aws:organizations::REDACTED:policy/o-REDACTED/aiservices_opt_out_policy/p-REDACTED"
     "content" = "{\"services\":{\"default\":{\"opt_out_policy\":{\"@@assign\":\"optOut\"}}}}"
-    "description" = "Opt-out of Amazon AI/ML service/s for all accounts accessible by the executing account."
+    "description" = "Opt-out of Amazon AI/ML service/s for all accounts accessible by the root account."
     "id" = "p-REDACTED"
     "name" = "OptOutOfAllAIServicesPolicy"
     "skip_destroy" = tobool(null)

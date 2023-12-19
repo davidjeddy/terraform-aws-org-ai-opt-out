@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Releases]
 
+## [0.2.0] - 2023-12-19
+
+### Added
+
+- Timestamp to policy name, now old policy will be removed when new is created
+- failure catch if the policy already exists, now will not fail
+
+### Moved
+
+- Policy creation to separate Bash script
+
 ## [0.1.0] - 2023-11-14
 
 ### Added
